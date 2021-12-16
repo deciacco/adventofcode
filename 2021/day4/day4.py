@@ -67,12 +67,8 @@ def main():
         if bingo_record[bingo_cards[item][1]] == 5 or bingo_record[bingo_cards[item][2]] == 5:
             break
     
-    print(nm)
-    print(winning_board)
-
     for item in range(0, len(bingo_cards)):
         if winning_board == int(bingo_cards[item][1][:len(str(pct))]):
-            print(bingo_cards[item])
             if bingo_cards[item][3] == 0 and len(bingo_cards[item][1]) == 4: # temp fix  here... 
                 non_sel_sum += bingo_cards[item][0]
 
