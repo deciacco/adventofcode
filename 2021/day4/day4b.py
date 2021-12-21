@@ -13,7 +13,7 @@ import sys
 
 # Constants
 OWNP = os.path.abspath(os.path.dirname(sys.argv[0])) # Own path
-FILENM = '/tempinput.txt'
+FILENM = '/input.txt'
 COL  = 5
 
 def main():
@@ -21,16 +21,19 @@ def main():
     bingo_nums = []
     bingo_cards = []
     bingo_record = {}
+    rpct = 1
     pct = 0
     rct = 0
     cct = 0
-    winning_board = -1
+    cwb = -1
+    winning_boards = []
     non_sel_sum = 0
 
     with open(OWNP + FILENM, 'r') as f:
         for line in f.readlines()[2:]:
             if line.startswith('\n'):
                 pct += 1
+                rpct += 1
                 rct = 0
             else:
                 for nm in line.split(' '):
@@ -55,20 +58,23 @@ def main():
     for nm in bingo_nums:
         for item in range(0, len(bingo_cards)):
             if nm == bingo_cards[item][0]:
-                bingo_cards[item][3] = 1
-                bingo_record[bingo_cards[item][1]] += 1
-                bingo_record[bingo_cards[item][2]] += 1
+                bingo_cards[item][3] = 1 #mark number present on board
+                bingo_record[bingo_cards[item][1]] += 1 #increase count of called number for that row and colum
+                bingo_record[bingo_cards[item][2]] += 1 # "                       "                          ""
 
+                #if we have 5 count, that row/col is full, therefor record board as winning
                 if bingo_record[bingo_cards[item][1]] == COL or bingo_record[bingo_cards[item][2]] == COL:
-                    winning_board = int(bingo_cards[item][1].split(".")[0])
-                    break
+                    cwb = int(bingo_cards[item][1].split(".")[0]) #current winning board
+                    if cwb not in winning_boards:
+                        winning_boards.append(cwb)
+                        rpct -= 1 #decrease the number of boards
 
-        if bingo_record[bingo_cards[item][1]] == COL or bingo_record[bingo_cards[item][2]] == COL:
+        if rpct == 0: #there are no more boards left to win
             break
 
     for item in range(0, len(bingo_cards)):
-        if winning_board == int(bingo_cards[item][1].split(".")[0]):
-            if bingo_cards[item][3] != 1:
+        if winning_boards[-1] == int(bingo_cards[item][1].split(".")[0]):
+            if bingo_cards[item][3] != 1: #look only at items not selected on the last winning board
                 non_sel_sum += bingo_cards[item][0]
 
     print(non_sel_sum)
