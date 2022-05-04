@@ -20,7 +20,7 @@ FILENM = '/input.txt'
 
 # Main
 def main():
-    print('ok')
+    print('cool')
 
 
 
