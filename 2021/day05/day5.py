@@ -22,6 +22,7 @@ FILENM = '/input.txt'
 def main():
     print('cool')
     print('ok')
+    print('fine')
 
 
 
