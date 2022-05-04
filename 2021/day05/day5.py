@@ -21,7 +21,7 @@ FILENM = '/input.txt'
 # Main
 def main():
     print('cool')
-
+    print('ok')
 
 
 
